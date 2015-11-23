@@ -7,7 +7,7 @@ exports.properties = ['code_qp',
 * @param {Array} bbox
 */
 
-exports.getLayer = function(bbox, req, cb){
+exports.getLayer = function(bbox, req){
   var sql = `SELECT ST_ASgeojson(qp.geom) as geom,
                       code_qp,
                       nom_qp,
@@ -15,9 +15,9 @@ exports.getLayer = function(bbox, req, cb){
                       if (bbox){
                         bbox_arr = bbox.split(",");
                         sql +=  `,(select st_makeenvelope(${bbox_arr.map(corner => corner)}, 4326) geom) b
-                        where st_intersects(b.geom, qp.geom)`
+                        where b.geom ~ qp.geom`
                       }
-                      req.pg.client.query(sql, cb);
+                      return req.db.query(sql);
 }
 exports.intersects = function(geom, req, cb){
   var sql = `SELECT code_qp,
@@ -25,7 +25,7 @@ exports.intersects = function(geom, req, cb){
                       commune_qp FROM politiqueville as qp`;
   sql +=  `,(ST_SetSRID(ST_GeomFromGeoJSON(${geom}), 4326) d
   where st_intersects(d.geom, qp.geom)`
-  req.pg.client.query(sql, cb);
+  req.db.query(sql);
 }
 /*
 direct geojson from postgis, this is 20% slower than

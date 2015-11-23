@@ -5,20 +5,19 @@ var express = require('express')
 
 
 router.get('/layer', function(req, res) {
-  var qpv = Qpv.getLayer(req.query.bbox, req, function (err, result){
-    featureCollection = geojson.rows_to_geojson(result.rows, Qpv.properties)
-
-    res.send(featureCollection);
-
-  });
+  var qpv = Qpv.getLayer(req.query.bbox, req);
+  qpv.then( function (data){
+    var featureCollection = geojson.rows_to_geojson(data, Qpv.properties);
+    res.json(featureCollection);
+  }).catch(function (err){
+    console.error(err)
+    res.status(500).send({error:'something bad happens'})
+  })
 })
 
 router.post('/intersects', function(req, res) {
-  
-  var qpv = Qpv.intersects(req.query, req, function (err, result){
 
-    res.send(result.rows);
-
-  });
+  var qpv = Qpv.intersects(req.query, req);
+  res.send();
 })
 module.exports = router

@@ -1,22 +1,6 @@
-var pg = require('pg');
-var onFinished = require('on-finished');
+var pgp = require('pg-promise')();
 
 module.exports = function(req, res, next) {
-    pg.connect(process.env.PG_URI || 'postgres://docker:docker@postgis.docker/apicarto_zoneville', function (err, client, done) {
-            if (err) {
-                console.log(err);
-                //Return an error?
-                return;
-            }
-        req.pg = {
-             client: client,
-             done: done,
-             kill: false
-         };
-        next();
-    });
-    onFinished(req, function (err, req) {
-      if (req.pg)
-            req.pg.done();
-    });
+    req.db = pgp(process.env.PG_URI || 'postgres://docker:docker@172.18.0.2:5432/apicarto_zoneville');
+    next()
 }
