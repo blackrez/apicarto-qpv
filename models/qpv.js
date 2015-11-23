@@ -14,8 +14,7 @@ exports.getLayer = function(bbox){
                       nom_qp,
                       commune_qp FROM politiqueville as qp`;
                       if (bbox){
-                        bbox_arr = bbox.split(",");
-                        sql +=  `,(select st_makeenvelope(${bbox_arr.map(corner => corner)}, 4326) geom) b
+                        sql +=  `,(select st_makeenvelope(${bbox.map(corner => corner)}, 4326) geom) b
                         where b.geom ~ qp.geom`
                       }
                       return db.query(sql);
