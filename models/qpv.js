@@ -1,3 +1,4 @@
+var db = require('../db')
 
 exports.properties = ['code_qp',
                       'nom_qp',
@@ -7,7 +8,7 @@ exports.properties = ['code_qp',
 * @param {Array} bbox
 */
 
-exports.getLayer = function(bbox, req){
+exports.getLayer = function(bbox){
   var sql = `SELECT ST_ASgeojson(qp.geom) as geom,
                       code_qp,
                       nom_qp,
@@ -17,7 +18,7 @@ exports.getLayer = function(bbox, req){
                         sql +=  `,(select st_makeenvelope(${bbox_arr.map(corner => corner)}, 4326) geom) b
                         where b.geom ~ qp.geom`
                       }
-                      return req.db.query(sql);
+                      return db.query(sql);
 }
 exports.intersects = function(geom, req, cb){
   var sql = `SELECT code_qp,
@@ -25,7 +26,7 @@ exports.intersects = function(geom, req, cb){
                       commune_qp FROM politiqueville as qp`;
   sql +=  `,(ST_SetSRID(ST_GeomFromGeoJSON(${geom}), 4326) d
   where st_intersects(d.geom, qp.geom)`
-  req.db.query(sql);
+  db.query(sql);
 }
 /*
 direct geojson from postgis, this is 20% slower than

@@ -5,7 +5,7 @@ var express = require('express')
 
 
 router.get('/layer', function(req, res) {
-  var qpv = Qpv.getLayer(req.query.bbox, req);
+  var qpv = Qpv.getLayer(req.query.bbox);
   qpv.then( function (data){
     var featureCollection = geojson.rows_to_geojson(data, Qpv.properties);
     res.json(featureCollection);
@@ -17,7 +17,7 @@ router.get('/layer', function(req, res) {
 
 router.post('/intersects', function(req, res) {
 
-  var qpv = Qpv.intersects(req.query, req);
+  var qpv = Qpv.intersects(req.query.geom);
   res.send();
 })
 module.exports = router
