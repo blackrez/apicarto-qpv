@@ -18,20 +18,43 @@ router.get('/layer', function(req, res) {
       res.json(featureCollection);
     }).catch(function(err) {
       console.error(err)
-      res.status(500).send({
+      res.status(500).json({
         error: 'something bad happens'
       })
     })
   } else {
-    res.status(500).send({
+    res.status(500).json({
       error: 'invalid bbox'
     })
   }
 })
 
 router.post('/intersects', function(req, res) {
-
-  var qpv = Qpv.intersects(req.query.geom);
-  res.send();
+  var geojsonFeature = req.body;
+  if (geojsonFeature.geometry){
+    var isvalid = isvalidgeo(geojsonFeature);
+  } else {
+    res.status(500).json({
+      error: 'no geojson provided'
+    })
+  }
+  console.log(geojsonFeature);
+  if (isvalid){
+    console.log('valid');
+    var qpv = Qpv.intersects(geojsonFeature.geometry);
+    qpv.then(function (data){
+      res.json(data);
+    })
+    .catch(function(err) {
+      console.error(err)
+      res.status(500).json({
+        error: 'something bad happens'
+      })
+    })
+  } else {
+    res.status(500).json({
+      error: 'invalid geojson or geometry'
+    })
+  }
 })
 module.exports = router

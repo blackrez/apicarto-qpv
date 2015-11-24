@@ -20,13 +20,15 @@ exports.getLayer = function(bbox) {
   }
   return db.query(sql);
 }
-exports.intersects = function(geom, req, cb) {
+exports.intersects = function(geom) {
+  console.log(geom);
     var sql = `SELECT code_qp,
                       nom_qp,
                       commune_qp FROM politiqueville as qp`;
-    sql += `,(ST_SetSRID(ST_GeomFromGeoJSON(${geom}), 4326) d
-              where st_intersects(d.geom, qp.geom)`
-    db.query(sql);
+    sql += `, (select ST_SetSRID(ST_GeomFromGeoJSON('${JSON.stringify(geom)}'), 4326) geom) d
+              where st_intersects(d.geom, qp.geom)`;
+              console.log(sql);
+    return db.query(sql);
   }
   /*
   direct geojson from postgis, this is 20% slower than
