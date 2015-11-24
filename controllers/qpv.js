@@ -11,7 +11,7 @@ router.get('/layer', function(req, res) {
     var geojsonbbox = turf.bboxPolygon(bbox);
     var isvalid = isvalidgeo(geojsonbbox);
   }
-  if (isvalid || !req.bbox){
+  if (isvalid || !req.query.bbox){
     var qpv = Qpv.getLayer(bbox);
     qpv.then( function (data){
       var featureCollection = geojson.rows_to_geojson(data, Qpv.properties);
@@ -22,7 +22,7 @@ router.get('/layer', function(req, res) {
     })
   }
   else{
-    res.status(500).send({error:'invalid GeoJSON'})
+    res.status(500).send({error:'invalid bbox'})
   }
 })
 
