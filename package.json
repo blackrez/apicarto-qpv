@@ -1,10 +1,11 @@
 {
   "name": "apicarto-zoneville",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint controllers/**/*.js *.js",
-    "start": "node server"
+    "lint": "./node_modules/bin/eslint controllers/**/*.js *.js",
+    "test": "./node_modules/mocha/bin/mocha",
+    "start": "node app.js"
   },
   "contributors": "Nabil Servais <nabil@eml.cc>",
   "repository": "sgmap/apicarto-zoneville",
@@ -13,14 +14,19 @@
     "body-parser": "^1.14.1",
     "cors": "^2.7.1",
     "express": "^4.13.3",
+    "express-winston": "^0.4.1",
     "handlebars": "^4.0.3",
-    "jsts": "0.16.0",
+    "jsts": "^0.16.0",
     "lodash": "^3.10.1",
     "morgan": "^1.6.1",
     "pg-promise": "^2.3.4",
-    "turf": "^ 2.0.2 "
+    "turf": "^ 2.0.2 ",
+    "winston": "^2.1.1"
   },
   "devDependencies": {
-    "eslint": "^1.7.2"
+    "eslint": "^1.7.2",
+    "should": "^7.1.1",
+    "supertest": "^1.1.0",
+    "mocha": "^2.3.4"
   }
 }
