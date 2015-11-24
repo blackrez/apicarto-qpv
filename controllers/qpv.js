@@ -38,15 +38,12 @@ router.post('/intersects', function(req, res) {
       error: 'no geojson provided'
     })
   }
-  console.log(geojsonFeature);
   if (isvalid){
-    console.log('valid');
     var qpv = Qpv.intersects(geojsonFeature.geometry);
     qpv.then(function (data){
       res.json(data);
     })
     .catch(function(err) {
-      console.error(err)
       res.status(500).json({
         error: 'something bad happens'
       })
