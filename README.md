@@ -1,6 +1,5 @@
 ## Synopsis
 
-APICarto Zoneville est un service qui permet à partir d'une adresse de déterminer le zonage particulier. Les zones supportées sont les ZFU (source IGN) et Quartiers Prioritaires (source Ministère de la ville).
 
 ## Installation
 
@@ -8,88 +7,56 @@ APICarto Zoneville est un service qui permet à partir d'une adresse de détermi
 
 
 ```bash
-<<<<<<< HEAD
-$ git clone
-=======
-$ git clone 
->>>>>>> f7e24825f66b0a454b672ba87942a5105269e023
-$ cd apicarto-zoneville
-(Debian)
-# apt install postgresql-9.3 postgresql-9.3-postgis-2.1
-
 $ npm install
 ```
 
 ### Création de la base de données
 
 ```bash
-#su - postgres -c createdb zoneville
-<<<<<<< HEAD
-#su - postgres -c psql zoneville
-psql > create extension postgis;
-$ cd data
-$ wget http://www.ville.gouv.fr/squelettes/carto/assets/qp-politiquedelaville-shp.zip
-$ unzip -x
-$ shp2pgsql -I -W LATIN1 -d -s 4326 QP_POLITIQUEVILLE.shp politiqueville qp|psql zoneville
-```
-
-=======
-#su - postgres -c psql zoneville 
-psql > create extension postgis;
-$ cd data
-$ wget http://www.ville.gouv.fr/squelettes/carto/assets/qp-politiquedelaville-shp.zip
-$ unzip -x 
-$ shp2pgsql -I -W LATIN1 -d -s 4326 QP_POLITIQUEVILLE.shp politiqueville qp|psql zoneville
 ```
 
 ### Launch it
 
 ```bash
 $ cd ..
-$ node .
+$ npm start
 ```
 
 ## API Reference
 
-Serveur publique : 
-http://apicarto.coremaps.com
+Serveur publique :
 
 
-### GET /zoneville/api/beta/zfu
+### GET /qpv/layer
 
 Paramètres
 
-* adresse : L'adresse qui sera géocodée par BANO
+* bbox (optionnel) : bbox
 
 
-exemple : 
-curl http://apicarto.coremaps.com/zoneville/api/beta/zfu?adresse=rue%20du%20grand%20chemin,roubaix
+exemple :
 
 
-### GET /zoneville/api/beta/qp
+
+### POST /qpv/intersects
 
 Paramètres :
 
-* x (obligatoire) : coordonnées X d'un point (en wgs84)
-
-* y (obligatoire) : coordonnées Y d'un point (en wgs84)
+* geojson
 
 ## Tests
 
-:TODO
+```bash
+$ cd ..
+$ npm test
+```
 
 ## ROADMAP
 
 
-- [ ] Ajouter les ZRR
-- [ ] Unifier les paramètres d'API
-- [ ] Tester toutes les zones et retourner
-- [ ] Unifier les réponses de l'API
-
->>>>>>> f7e24825f66b0a454b672ba87942a5105269e023
 ## Contributors
 
-Nabil Servais (SGMAP)
+Nabil Servais
 
 ## License
 
