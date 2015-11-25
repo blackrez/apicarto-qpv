@@ -6,18 +6,17 @@ function FeatureCollection() {
 
 exports.rows_to_geojson = function(rows, propertiesObject) {
   var featureCollection = new FeatureCollection();
-
-  for (var i = 0; i < rows.length; i++) {
+  rows.map(function (row){
     var properties = {};
     for (var p in propertiesObject) {
       namePropertie = propertiesObject[p];
-      properties[namePropertie] = rows[i][namePropertie];
+      properties[namePropertie] = row[namePropertie];
     }
-    featureCollection.features[i] = {
+    featureCollection.features.push({
       type: "Feature",
-      geometry: JSON.parse(rows[i].geom),
+      geometry: JSON.parse(row.geom),
       properties: properties
-    }
-  }
+    })
+  })
   return featureCollection
 }

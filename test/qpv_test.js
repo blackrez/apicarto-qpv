@@ -91,7 +91,7 @@ describe('Test QPV', function() {
           done();
         });
     });
-    it('should return an json whith metadata of the intersecton geojson with a point and qpv', function(done) {
+    it('should return an array of json whith metadata of the intersecton geojson with a point and qpv', function(done) {
       var geojsonFeature = {
         "type": "Feature",
         "properties": {
@@ -118,7 +118,7 @@ describe('Test QPV', function() {
           done();
         });
     });
-    it('should return an empty json of the intersecton geojson with a point and qpv', function(done) {
+    it('should return an empty aray of json of the intersecton geojson with a point and qpv', function(done) {
       var geojsonFeature = {
         "type": "Feature",
         "properties": {
