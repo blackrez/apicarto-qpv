@@ -21,7 +21,7 @@ describe('Test QPV', function() {
           if (err) return done(err);
           res.body.type.should.equal("FeatureCollection");
           res.body.features.length.should.not.equal(0);
-          res.body.features.should.not.equal(null);
+          res.body.features.should.not.eql([]);
           done();
         });
     });
@@ -46,7 +46,7 @@ describe('Test QPV', function() {
         .end(function(err, res) {
           if (err) return done(err);
           res.body.type.should.equal("FeatureCollection");
-          res.body.features.should.not.equal(null);
+          res.body.features.should.not.eql([]);
           done();
         });
     });
