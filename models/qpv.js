@@ -16,7 +16,7 @@ exports.getLayer = function(bbox) {
                       commune_qp FROM quartiers_prioritaires as qp`;
   if (bbox) {
     sql += `,(select st_makeenvelope(${bbox.map(corner => corner)}, 4326) geom) b
-                        where b.geom ~ qp.geom`
+                        where b.geom && qp.geom`
   }
   return db.query(sql);
 }
