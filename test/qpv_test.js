@@ -95,11 +95,11 @@ describe('Test QPV', function() {
       var geojsonFeature = {
         "type": "Feature",
         "properties": {
-          "name": "Test Point",
+          "name": "Test Point in qpv",
         },
         "geometry": {
           "type": "Point",
-          "coordinates": [-61.5252644662586,16.2421181311017]
+          "coordinates": [3.055502, 50.627702]
         }
       };
       request(server)
@@ -111,7 +111,34 @@ describe('Test QPV', function() {
         .expect(200)
         .end(function(err, res) {
           if (err) return done(err);
-          res.body.should.not.equal(null);
+          res.body.should.not.eql([]);
+          res.body[0].should.have.property('nom_qp');
+          res.body[0].should.have.property('commune_qp');
+          res.body[0].should.have.property('code_qp');
+          done();
+        });
+    });
+    it('should return an empty json of the intersecton geojson with a point and qpv', function(done) {
+      var geojsonFeature = {
+        "type": "Feature",
+        "properties": {
+          "name": "Test Point in qpv",
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [0, 0]
+        }
+      };
+      request(server)
+        .post('/qpv/intersects')
+        .set('Accept', 'application/json')
+        .set('Content-Type', 'application/json')
+        .send(JSON.stringify(geojsonFeature))
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end(function(err, res) {
+          if (err) return done(err);
+          res.body.should.eql([]);
           done();
         });
     });
@@ -126,7 +153,10 @@ describe('Test QPV', function() {
         .expect(200)
         .end(function(err, res) {
           if (err) return done(err);
-          res.body.should.not.equal(null);
+          res.body.should.not.eql([]);
+          res.body[0].should.have.property('nom_qp');
+          res.body[0].should.have.property('commune_qp');
+          res.body[0].should.have.property('code_qp');
           done();
         });
     });
