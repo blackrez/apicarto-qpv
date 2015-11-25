@@ -37,6 +37,8 @@ router.post('/intersects', function(req, res) {
     res.status(500).json({
       error: 'no geojson provided'
     })
+    // for fix this Error: Can't set headers after they are sent.
+    return
   }
   if (isvalid){
     var qpv = Qpv.intersects(geojsonFeature.geometry);
