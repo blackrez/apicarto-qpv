@@ -17,8 +17,6 @@
     "express-winston": "^0.4.1",
     "handlebars": "^4.0.3",
     "jsts": "^0.16.0",
-    "lodash": "^3.10.1",
-    "morgan": "^1.6.1",
     "pg-promise": "^2.3.4",
     "turf": "^ 2.0.2 ",
     "winston": "^2.1.1"
