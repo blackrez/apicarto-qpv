@@ -57,6 +57,7 @@ describe('Test QPV', function() {
         .post('/qpv/intersects')
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
+        .send({})
         .expect('Content-Type', /json/)
         .expect(500)
         .end(function(err, res) {

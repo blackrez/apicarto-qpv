@@ -13,7 +13,7 @@ exports.getLayer = function(bbox) {
   var sql = `SELECT ST_ASgeojson(qp.geom) as geom,
                       code_qp,
                       nom_qp,
-                      commune_qp FROM politiqueville as qp`;
+                      commune_qp FROM quartiers_prioritaires as qp`;
   if (bbox) {
     sql += `,(select st_makeenvelope(${bbox.map(corner => corner)}, 4326) geom) b
                         where b.geom ~ qp.geom`
@@ -21,13 +21,11 @@ exports.getLayer = function(bbox) {
   return db.query(sql);
 }
 exports.intersects = function(geom) {
-  console.log(geom);
     var sql = `SELECT code_qp,
                       nom_qp,
-                      commune_qp FROM politiqueville as qp`;
+                      commune_qp FROM quartiers_prioritaires as qp`;
     sql += `, (select ST_SetSRID(ST_GeomFromGeoJSON('${JSON.stringify(geom)}'), 4326) geom) d
               where st_intersects(d.geom, qp.geom)`;
-              console.log(sql);
     return db.query(sql);
   }
   /*
