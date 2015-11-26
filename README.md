@@ -74,6 +74,8 @@ $ cd ..
 $ npm test
 ```
 
+Un exemple d'implémentation est disponible ici.
+
 ## ROADMAP
 
 
