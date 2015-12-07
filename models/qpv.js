@@ -10,7 +10,7 @@ exports.properties = ['code_qp',
    */
 
 exports.getLayer = function(bbox) {
-  var sql = `SELECT ST_ASgeojson(qp.geom) as geom,
+  var sql = `SELECT qp.geom,
                       code_qp,
                       nom_qp,
                       commune_qp FROM quartiers_prioritaires as qp`;

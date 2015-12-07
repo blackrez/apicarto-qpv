@@ -1,3 +1,4 @@
+var wkx = require('wkx');
 // GeoJSON Feature Collection
 function FeatureCollection() {
   this.type = 'FeatureCollection';
@@ -6,7 +7,8 @@ function FeatureCollection() {
 
 exports.rows_to_geojson = function(rows, propertiesObject) {
   var featureCollection = new FeatureCollection();
-  featureCollection.features = rows.map(function (row){
+  featureCollection.features = rows.map(function(row) {
+    var buf = new Buffer(row.geom, 'hex');
     var properties = {};
     for (var p in propertiesObject) {
       namePropertie = propertiesObject[p];
@@ -14,7 +16,7 @@ exports.rows_to_geojson = function(rows, propertiesObject) {
     }
     return {
       type: "Feature",
-      geometry: JSON.parse(row.geom),
+      geometry: wkx.Geometry.parse(buf).toGeoJSON(),
       properties: properties
     }
   })

@@ -19,7 +19,8 @@
     "jsts": "^0.16.0",
     "pg-promise": "^2.3.4",
     "turf": "^ 2.0.2 ",
-    "winston": "^2.1.1"
+    "winston": "^2.1.1",
+    "wkx": "^0.2.0"
   },
   "devDependencies": {
     "eslint": "^1.7.2",
